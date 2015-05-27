@@ -1,1 +1,1 @@
-add_library(Core Core.cpp)
+add_library(Core Core.cpp Core.h)
