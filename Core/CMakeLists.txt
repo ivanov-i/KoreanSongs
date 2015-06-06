@@ -1,1 +1,1 @@
-add_library(Core Core.cpp Core.h)
+add_library(Core SplitLines.cpp SplitLines.h)
