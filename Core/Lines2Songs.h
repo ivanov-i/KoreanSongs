@@ -3,6 +3,7 @@
 #include <string>
 
 class Songs2Cue;
+class Song;
 
 class Lines2Songs {
 public:
@@ -10,4 +11,5 @@ public:
     virtual void ProcessLine(std::string line);
 private:
     Songs2Cue* output;
+    virtual Song Str2Song(std::string str);
 };

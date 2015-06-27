@@ -8,6 +8,10 @@ Lines2Songs::Lines2Songs(Songs2Cue *songs2Cue)
 }
 
 void Lines2Songs::ProcessLine(std::string line) {
-    auto song = Song(line);
+    auto song = Str2Song(line);
     output->ProcessSong(song);
+}
+
+Song Lines2Songs::Str2Song(std::string str) {
+    return Song(str);
 }
