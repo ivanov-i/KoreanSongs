@@ -25,6 +25,18 @@ namespace {
         EXPECT_EQ(11, song.Second());
     }
 
+
+    TEST(Song, yet_another_format) {
+        auto song = Song("    053 권태수[`76]A01 눈으로(2:48:39)");
+        EXPECT_EQ(53, song.Number());
+        EXPECT_EQ("권태수", song.Artist());
+        EXPECT_EQ(76, song.Year());
+        EXPECT_EQ("눈으로", song.Title());
+        EXPECT_EQ(2, song.Hour());
+        EXPECT_EQ(48, song.Minute());
+        EXPECT_EQ(39, song.Second());
+    }
+
     TEST(Song, to_cue)
     {
         auto song = Song("24 artist name['2182]A01 the song has a title(3:01:25)");
@@ -35,5 +47,4 @@ namespace {
                         "INDEX 01 181:25:00";
         EXPECT_EQ(expected, actual);
     }
-
 }

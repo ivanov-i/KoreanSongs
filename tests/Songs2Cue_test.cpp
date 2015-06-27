@@ -20,6 +20,12 @@ namespace {
         std::ostringstream oss;
         auto processor = Songs2CueUnderTest(oss);
         processor.ProcessSong(Song::GetNull());
+        processor.ProcessSong(Song::GetNull());
         processor.Flush();
+        auto expected = "REM GENRE Pop\n"
+                "TITLE \"Korean pop music before K-pop\"\n"
+                "song\n"
+                "song\n";
+        EXPECT_EQ(expected, oss.str());
     }
 }

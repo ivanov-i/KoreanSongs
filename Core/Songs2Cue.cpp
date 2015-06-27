@@ -1,13 +1,14 @@
 #include "Songs2Cue.h"
-#include "Song.h"
 
 Songs2Cue::Songs2Cue(std::ostream &out)
-        : output(out)
+        : output(out),
+        headerPrinted(false)
 {
 };
 
 void Songs2Cue::ProcessSong(Song song) {
-
+    PrintHeaderIfNeeded();
+    output << ConvertSingleSong(song) << std::endl;
 }
 
 std::string Songs2Cue::ConvertSingleSong(Song song) {
@@ -15,5 +16,12 @@ std::string Songs2Cue::ConvertSingleSong(Song song) {
 }
 
 void Songs2Cue::Flush() {
+}
 
+void Songs2Cue::PrintHeaderIfNeeded() {
+    if(headerPrinted)
+        return;
+
+    output << "REM GENRE Pop\nTITLE \"Korean pop music before K-pop\"\n";
+    headerPrinted = true;
 }

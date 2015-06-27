@@ -5,6 +5,6 @@ add_executable(Tests Characters2Lines_test.cpp File2Characters_test.cpp Lines2So
 link_directories(gtest/lib)
 include_directories(../Core)
 
-target_link_libraries(Tests Core libgtest.a libgtest_main.a ${Boost_LIBRARY_DIR})
+target_link_libraries(Tests Core libgtest.a libgtest_main.a)
 
 add_test(Test Test)

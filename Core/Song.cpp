@@ -1,5 +1,6 @@
 #include <sstream>
 #include "Song.h"
+#include <string>
 
 
 Song::Song()
@@ -21,55 +22,62 @@ std::string Song::ToCueString() const {
     return oss.str();
 }
 
+#include <iostream>
 Song::Song(std::string str)
 :line(str)
 {
     Parse();
 }
-
 void Song::Parse() {
+    auto str = line;
+
     size_t artistOffset = 0;
     number = std::stoi(line, &artistOffset);
+    str = str.substr(artistOffset);
 
-    auto artistBegin = std::next(std::begin(line), artistOffset);
-    artistBegin = std::find_if_not(artistBegin, std::end(line), [](char c){return std::isspace(c);});
-    auto artistEnd = std::find(artistBegin, std::end(line), '[');
-    artist.assign(artistBegin, artistEnd);
+    auto artistBeginIt = std::find_if_not(std::begin(str), std::end(str), [](char c){return std::isspace(c);});
+    auto artistBegin = std::distance(std::begin(str), artistBeginIt);
+    str = str.substr(artistBegin);
 
-    auto yearBegin = std::find_if(artistEnd, std::end(line), [](char c){return c == '\'';});
-    yearBegin++;
+    auto artistEnd = str.find('[');
+    artist = str.substr(0, artistEnd);
+    str = str.substr(artistEnd, std::string::npos);
 
-    size_t yearEndOffset = 0;
-    auto yearStr = std::string(yearBegin, std::end(line));
-    year = std::stoi(yearStr, &yearEndOffset);
+    auto yearBeginit = std::find_if(std::begin(str), std::end(str), [](char c){return c == '\'' || c == '`';});
+    auto yearBegin = std::distance(std::begin(str), yearBeginit)  + 1;
+    str = str.substr(yearBegin);
 
-    auto titleBegin = std::distance(std::begin(line), yearBegin) + yearEndOffset + 5;
-    auto titleEnd = line.find_last_of('(');
+    size_t yearEnd = 0;
+    year = std::stoi(str, &yearEnd);
+    str = str.substr(yearEnd + 5);
+
+    auto titleEnd = str.find_last_of('(');
     auto noBrackets = line[line.length() - 1] != ')';
     if(noBrackets)
     {
-        for(titleEnd = line.length() - 1 - 7; titleEnd >= titleBegin; titleEnd--)
+        for(titleEnd = str.length() - 1 - 7; titleEnd > 0u; titleEnd--)
         {
-            auto c = line[titleEnd];
+            auto c = str[titleEnd];
             if(!std::isdigit(c) && c != ':')
                 break;
         }
         titleEnd++;
     }
-    title = line.substr(titleBegin, titleEnd - titleBegin);
+    title = str.substr(0, titleEnd);
 
-    auto hourStr = line.substr(titleEnd);
+    str = str.substr(titleEnd);
+
     if(!noBrackets)
-        hourStr = hourStr.substr(1);
+        str = str.substr(1);
     size_t hourEnd = 0;
-    hour = std::stoi(hourStr, &hourEnd);
+    hour = std::stoi(str, &hourEnd);
 
-    auto minuteStr = hourStr.substr(hourEnd+1);
+    str = str.substr(hourEnd+1);
     size_t minuteEnd = 0;
-    minute = std::stoi(minuteStr, &minuteEnd);
+    minute = std::stoi(str, &minuteEnd);
 
-    auto secondStr = minuteStr.substr(minuteEnd+1);
-    second = std::stoi(secondStr);
+    str = str.substr(minuteEnd+1);
+    second = std::stoi(str);
 }
 
 int Song::Number() const {

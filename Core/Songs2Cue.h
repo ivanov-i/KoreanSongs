@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Song.h"
+#include <iostream>
 
 class Song;
 
@@ -12,4 +13,7 @@ public:
 private:
     virtual std::string ConvertSingleSong(Song song);
     std::ostream& output;
+    bool headerPrinted;
+
+    void PrintHeaderIfNeeded();
 };
