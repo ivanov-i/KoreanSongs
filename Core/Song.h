@@ -8,13 +8,15 @@ public:
     static Song GetNull();
 
     int Number() const;
-    std::string Name() const;
+    std::string Artist() const;
     int Year() const;
+    std::string Title() const;
 
 private:
     void Parse();
     int number;
-    std::string name;
+    std::string title;
+    std::string artist;
     int year;
 
     std::string line;

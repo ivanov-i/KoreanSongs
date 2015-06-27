@@ -36,7 +36,7 @@ namespace {
         Lines2SongsTest(){};
     };
 
-    TEST_F(Lines2SongsTest, a) {
+    TEST_F(Lines2SongsTest, converts_to_songs) {
         auto line =   std::string(" some kind of line");
         auto testSink = SongsSink();
         auto processor = Lines2SongsUnderTest(&testSink);
