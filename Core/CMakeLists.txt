@@ -1,1 +1,1 @@
-add_library(Core fileInput.cpp fileInput.h CharInput.cpp CharInput.h)
+add_library(Core Characters.cpp Characters.h Lines.cpp Lines.h Songs.cpp Songs.h)

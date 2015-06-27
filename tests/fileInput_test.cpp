@@ -1,20 +1,33 @@
 #include <gtest/gtest.h>
 #include <fstream>
-#include "fileInput.h"
-#include "CharInput.h"
+#include "Songs.h"
+#include "Characters.h"
+#include "Lines.h"
 
 namespace {
 
-    class testCharInput : public CharInput
+    class testCharInput : public Lines
     {
 
     public:
-        testCharInput(std::string &actual) : str(actual) { }
+        testCharInput(std::string &actual)
+                : Lines(sink),
+                  str(actual),
+                  flushCalled(false)
+        {
+        }
 
         virtual void OnChar(char c) override {
             str += c;
         };
+
+        virtual void Flush() override {
+            flushCalled = true;
+        }
+
         std::string& str;
+        Songs sink;
+        bool flushCalled;
     };
 
     std::string ReadFile() {
@@ -34,9 +47,10 @@ namespace {
         auto actual = std::string();
         auto expected = ReadFile();
         auto testSink = testCharInput(actual);
-        auto input = fileInput();
+        auto input = Characters();
         input.ProcessFile("songs.txt", testSink);
         EXPECT_EQ(expected, actual);
+        EXPECT_TRUE(testSink.flushCalled);
     }
 
 }
