@@ -1,6 +1,6 @@
 include_directories(SYSTEM gtest/include)
 
-add_executable(Tests fileInput_test.cpp CharInput_test.cpp)
+add_executable(Tests Characters2Lines_test.cpp File2Characters_test.cpp)
 
 link_directories(gtest/lib)
 include_directories(../Core)
