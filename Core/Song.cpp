@@ -1,3 +1,4 @@
+#include <sstream>
 #include "Song.h"
 
 
@@ -11,8 +12,13 @@ Song::Song()
 
 }
 
-std::string Song::ToString() const {
-    return 0;
+std::string Song::ToCueString() const {
+    auto oss = std::ostringstream();
+    oss << "TRACK "<< Number() << " AUDIO" << std::endl << 
+                   "TITLE \"" << Title() << "\"" << std::endl <<
+                   "PERFORMER \"" << Artist() << "\"" << std::endl <<
+                   "INDEX 01 " << Hour()*60 + Minute() << ':' << Second() << ":00";
+    return oss.str();
 }
 
 Song::Song(std::string str)
@@ -26,7 +32,7 @@ void Song::Parse() {
     number = std::stoi(line, &artistOffset);
 
     auto artistBegin = std::next(std::begin(line), artistOffset);
-    artistBegin = std::find_if_not(artistBegin, std::end(line), std::isspace);
+    artistBegin = std::find_if_not(artistBegin, std::end(line), [](char c){return std::isspace(c);});
     auto artistEnd = std::find(artistBegin, std::end(line), '[');
     artist.assign(artistBegin, artistEnd);
 

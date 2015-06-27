@@ -4,7 +4,7 @@
 class Song {
 public:
     Song(std::string line);
-    virtual std::string ToString() const;
+    virtual std::string ToCueString() const;
     static Song GetNull();
 
     int Number() const;

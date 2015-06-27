@@ -10,7 +10,7 @@ class Printer : public Songs2Cue
 public:
     virtual void ProcessSong(Song song) override
     {
-        auto line = song.ToString();
+        auto line = song.ToCueString();
         std::cout << line << std::endl;
     }
 };

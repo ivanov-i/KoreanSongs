@@ -25,4 +25,15 @@ namespace {
         EXPECT_EQ(11, song.Second());
     }
 
+    TEST(Song, to_cue)
+    {
+        auto song = Song("24 artist name['2182]A01 the song has a title(3:01:25)");
+        auto actual = song.ToCueString();
+        auto expected = "TRACK 24 AUDIO\n"
+                        "TITLE \"the song has a title\"\n"
+                        "PERFORMER \"artist name\"\n"
+                        "INDEX 01 181:25:00";
+        EXPECT_EQ(expected, actual);
+    }
+
 }
