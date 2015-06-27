@@ -11,6 +11,9 @@ public:
     std::string Artist() const;
     int Year() const;
     std::string Title() const;
+    int Hour() const;
+    int Minute() const;
+    int Second() const;
 
 private:
     void Parse();
@@ -18,6 +21,9 @@ private:
     std::string title;
     std::string artist;
     int year;
+    int hour;
+    int minute;
+    int second;
 
     std::string line;
     Song();

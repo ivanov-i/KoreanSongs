@@ -9,6 +9,9 @@ namespace {
         EXPECT_EQ("Two Ace(금과은)", song.Artist());
         EXPECT_EQ(75, song.Year());
         EXPECT_EQ("빗속을 둘이서", song.Title());
+        EXPECT_EQ(1, song.Hour());
+        EXPECT_EQ(15, song.Minute());
+        EXPECT_EQ(36, song.Second());
     }
 
     TEST(Song, FromString_with_star) {
@@ -17,6 +20,9 @@ namespace {
         EXPECT_EQ("사랑과 평화", song.Artist());
         EXPECT_EQ(78, song.Year());
         EXPECT_EQ("한동안 뜸 했었지", song.Title());
+        EXPECT_EQ(2, song.Hour());
+        EXPECT_EQ(1, song.Minute());
+        EXPECT_EQ(11, song.Second());
     }
 
 }
