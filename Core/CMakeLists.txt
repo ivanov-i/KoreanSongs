@@ -1,1 +1,1 @@
-add_library(Core CharactersFromFile.cpp CharactersFromFile.h Characters2Lines.cpp Characters2Lines.h Lines2Songs.cpp Lines2Songs.h)
+add_library(Core CharactersFromFile.cpp CharactersFromFile.h Characters2Lines.cpp Characters2Lines.h Lines2Songs.cpp Lines2Songs.h Songs2Cue.cpp Songs2Cue.h Song.cpp Song.h)

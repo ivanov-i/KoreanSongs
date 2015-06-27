@@ -2,7 +2,7 @@
 #include "CharactersFromFile.h"
 #include "Characters2Lines.h"
 
-CharactersFromFile::CharactersFromFile(Characters2Lines &charactersProcessor)
+CharactersFromFile::CharactersFromFile(Characters2Lines *charactersProcessor)
         : output(charactersProcessor)
 {
 }
@@ -28,7 +28,7 @@ void CharactersFromFile::ProcessFile(std::string file) {
     for(auto c : irange<char>(ifs))
     {
         char expected = c;
-        output.OnChar(c);
+        output->OnChar(c);
     }
-    output.Flush();
+    output->Flush();
 }

@@ -6,12 +6,12 @@
 
 namespace {
 
-    class testCharInput : public Characters2Lines
+    class CharacterSink : public Characters2Lines
     {
 
     public:
-        testCharInput(std::string &actual)
-                : Characters2Lines(sink),
+        CharacterSink(std::string &actual)
+                : Characters2Lines(nullptr),
                   str(actual),
                   flushCalled(false)
         {
@@ -26,7 +26,6 @@ namespace {
         }
 
         std::string& str;
-        Lines2Songs sink;
         bool flushCalled;
     };
 
@@ -46,8 +45,8 @@ namespace {
     TEST(FileInput, reads_file){
         auto actual = std::string();
         auto expected = ReadFile();
-        auto testSink = testCharInput(actual);
-        auto input = CharactersFromFile(testSink);
+        auto testSink = CharacterSink(actual);
+        auto input = CharactersFromFile(&testSink);
         input.ProcessFile("songs.txt");
         EXPECT_EQ(expected, actual);
         EXPECT_TRUE(testSink.flushCalled);

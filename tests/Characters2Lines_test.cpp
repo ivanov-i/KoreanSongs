@@ -5,9 +5,13 @@
 
 namespace {
 
-    class TestSongsSink : public Lines2Songs {
+    class LinesSink : public Lines2Songs {
 
     public:
+        LinesSink() : Lines2Songs(nullptr)
+        {
+        }
+
         virtual void ProcessLine(std::string line) override {
             lines.push_back(line);
         }
@@ -19,11 +23,11 @@ namespace {
     public:
         Characters2LinesTest();
         void SendData(std::string data);
-        TestSongsSink sink;
+        LinesSink sink;
         Characters2Lines lines;
     };
 
-    Characters2LinesTest::Characters2LinesTest() : lines(sink) {
+    Characters2LinesTest::Characters2LinesTest() : lines(&sink) {
 
     }
 

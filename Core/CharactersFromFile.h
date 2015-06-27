@@ -6,9 +6,9 @@ class Characters2Lines;
 
 class CharactersFromFile {
 public:
-    CharactersFromFile(Characters2Lines &charactersProcessor);
+    CharactersFromFile(Characters2Lines* charactersProcessor);
 
     void ProcessFile(std::string file);
 
-    Characters2Lines &output;
+    Characters2Lines* output;
 };
