@@ -19,4 +19,5 @@ void Characters2Lines::Flush() {
     if(currentLine.length() > 0)
         output->ProcessLine(currentLine);
     currentLine = std::string();
+    output->Flush();
 }

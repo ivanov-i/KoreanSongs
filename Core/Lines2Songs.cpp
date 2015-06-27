@@ -15,3 +15,7 @@ void Lines2Songs::ProcessLine(std::string line) {
 Song Lines2Songs::Str2Song(std::string str) {
     return Song(str);
 }
+
+void Lines2Songs::Flush() {
+    output->Flush();
+}

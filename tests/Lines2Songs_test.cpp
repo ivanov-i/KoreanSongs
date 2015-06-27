@@ -8,8 +8,14 @@ namespace {
 
     class SongsSink : public Songs2Cue {
     public:
+        virtual void Flush() override
+        {
+            flushCalled = true;
+        }
+
         SongsSink()
-                : Songs2Cue()
+                : Songs2Cue(oss),
+                flushCalled(false)
         {
 
         }
@@ -18,6 +24,8 @@ namespace {
             songs.push_back(song);
         }
         std::vector<Song> songs;
+        std::ostringstream oss;
+        bool flushCalled;
     };
 
     class Lines2SongsUnderTest : public Lines2Songs{
@@ -33,15 +41,24 @@ namespace {
     class Lines2SongsTest : public ::testing::Test
     {
     public:
-        Lines2SongsTest(){};
+        Lines2SongsTest()
+            :processor(&sink)
+        {
+
+        };
+        SongsSink sink;
+        Lines2SongsUnderTest processor;
     };
 
     TEST_F(Lines2SongsTest, converts_to_songs) {
         auto line =   std::string(" some kind of line");
-        auto testSink = SongsSink();
-        auto processor = Lines2SongsUnderTest(&testSink);
         processor.ProcessLine(line);
-        ASSERT_EQ(1, testSink.songs.size());
+        ASSERT_EQ(1, sink.songs.size());
+    }
+
+    TEST_F(Lines2SongsTest, calls_flush)
+    {
+        processor.Flush();
+        EXPECT_TRUE(sink.flushCalled);
     }
 }
-

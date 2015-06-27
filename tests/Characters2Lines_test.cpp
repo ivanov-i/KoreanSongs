@@ -8,7 +8,14 @@ namespace {
     class LinesSink : public Lines2Songs {
 
     public:
-        LinesSink() : Lines2Songs(nullptr)
+        virtual void Flush() override
+        {
+            flushCalled = true;
+        }
+
+        LinesSink()
+                : Lines2Songs(nullptr),
+                flushCalled(false)
         {
         }
 
@@ -16,6 +23,7 @@ namespace {
             lines.push_back(line);
         }
         std::vector<std::string> lines;
+        bool flushCalled;
     };
 
     class Characters2LinesTest : public ::testing::Test
@@ -24,10 +32,10 @@ namespace {
         Characters2LinesTest();
         void SendData(std::string data);
         LinesSink sink;
-        Characters2Lines lines;
+        Characters2Lines processor;
     };
 
-    Characters2LinesTest::Characters2LinesTest() : lines(&sink) {
+    Characters2LinesTest::Characters2LinesTest() : processor(&sink) {
 
     }
 
@@ -35,9 +43,9 @@ namespace {
     {
         for(auto c : data)
         {
-            lines.OnChar(c);
+            processor.OnChar(c);
         }
-        lines.Flush();
+        processor.Flush();
     }
 
     TEST_F(Characters2LinesTest, when_no_crlf_then_single_line) {
@@ -56,4 +64,10 @@ namespace {
         EXPECT_EQ(line1, sink.lines[0]);
         EXPECT_EQ(line2, sink.lines[1]);
     }
+    TEST_F(Characters2LinesTest, calls_flush)
+    {
+        processor.Flush();
+        EXPECT_TRUE(sink.flushCalled);
+    }
 }
+
