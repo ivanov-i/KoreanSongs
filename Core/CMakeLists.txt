@@ -1,1 +1,1 @@
-add_library(Core SplitLines.cpp SplitLines.h)
+add_library(Core ../tests/fileInput.cpp ../tests/fileInput.h ../tests/CharInput.cpp ../tests/CharInput.h)
