@@ -29,4 +29,4 @@ target_link_libraries(KoreanSongs Core ${Boost_LIBRARY_DIR})
 
 add_test(Tests KoreanSongs)
 
-configure_file(songs.txt tests/songs.txt COPYONLy)
+configure_file(songs.txt tests/songs.txt COPYONLY)
