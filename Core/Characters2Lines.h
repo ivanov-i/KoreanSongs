@@ -1,14 +1,14 @@
 #pragma once
 #include <string>
 
-class Songs;
+class Lines2Songs;
 
-class Lines {
+class Characters2Lines {
 public:
-    Lines(Songs &sink);
+    Characters2Lines(Lines2Songs &sink);
     virtual void OnChar(char c);
     virtual void Flush();
 private:
-    Songs & output;
+    Lines2Songs & output;
     std::string currentLine;
 };

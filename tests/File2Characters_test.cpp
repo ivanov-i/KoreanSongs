@@ -1,17 +1,17 @@
 #include <gtest/gtest.h>
 #include <fstream>
-#include "Songs.h"
-#include "Characters.h"
-#include "Lines.h"
+#include "Lines2Songs.h"
+#include "CharactersFromFile.h"
+#include "Characters2Lines.h"
 
 namespace {
 
-    class testCharInput : public Lines
+    class testCharInput : public Characters2Lines
     {
 
     public:
         testCharInput(std::string &actual)
-                : Lines(sink),
+                : Characters2Lines(sink),
                   str(actual),
                   flushCalled(false)
         {
@@ -26,7 +26,7 @@ namespace {
         }
 
         std::string& str;
-        Songs sink;
+        Lines2Songs sink;
         bool flushCalled;
     };
 
@@ -47,8 +47,8 @@ namespace {
         auto actual = std::string();
         auto expected = ReadFile();
         auto testSink = testCharInput(actual);
-        auto input = Characters();
-        input.ProcessFile("songs.txt", testSink);
+        auto input = CharactersFromFile(testSink);
+        input.ProcessFile("songs.txt");
         EXPECT_EQ(expected, actual);
         EXPECT_TRUE(testSink.flushCalled);
     }

@@ -1,6 +1,11 @@
 #include <fstream>
-#include "Characters.h"
-#include "Lines.h"
+#include "CharactersFromFile.h"
+#include "Characters2Lines.h"
+
+CharactersFromFile::CharactersFromFile(Characters2Lines &charactersProcessor)
+        : output(charactersProcessor)
+{
+}
 
 template <typename T>
 struct irange
@@ -17,7 +22,7 @@ std::istream_iterator<T> end(irange<T>) {
     return std::istream_iterator<T>();
 }
 
-void Characters::ProcessFile(std::string file, Lines &output) {
+void CharactersFromFile::ProcessFile(std::string file) {
     auto ifs = std::ifstream(file);
     auto it = std::istreambuf_iterator<char>(ifs >> std::noskipws);
     for(auto c : irange<char>(ifs))

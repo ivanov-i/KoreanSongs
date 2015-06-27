@@ -1,21 +1,21 @@
 #include <iostream>
-#include "Core/Characters.h"
-#include "Core/Songs.h"
-#include "Core/Lines.h"
+#include "Core/CharactersFromFile.h"
+#include "Core/Lines2Songs.h"
+#include "Core/Characters2Lines.h"
 
 using namespace std;
 
-class PrintSong : public Songs
+class PrintSong : public Lines2Songs
 {
 public:
     virtual void ProcessLine(std::string line) override;
 };
 
 int main() {
-    auto characters = Characters();
     auto printer = PrintSong();
-    auto lines = Lines(printer);
-    characters.ProcessFile("songs.txt", lines);
+    auto lines = Characters2Lines(printer);
+    auto characters = CharactersFromFile(lines);
+    characters.ProcessFile("songs.txt");
     return 0;
 }
 
