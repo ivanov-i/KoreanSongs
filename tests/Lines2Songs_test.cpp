@@ -3,6 +3,7 @@
 #include "Songs2Cue.h"
 
 #include <gtest/gtest.h>
+#include <Core/Song.h>
 
 namespace {
 
@@ -13,6 +14,11 @@ namespace {
         {
 
         }
+
+        virtual void ProcessSong(Song song) override {
+            songs.push_back(song);
+        }
+        std::vector<Song> songs;
     };
 
     class Lines2SongsTest : public ::testing::Test
@@ -31,5 +37,7 @@ namespace {
         auto testSink = SongsSink();
         auto processor = Lines2Songs(&testSink);
         processor.ProcessLine(line);
+        ASSERT_EQ(1, testSink.songs.size());
     }
 }
+

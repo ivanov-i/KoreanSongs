@@ -3,5 +3,6 @@
 class Song;
 
 class Songs2Cue {
-    virtual void ProcessSong(Song& song);
+public:
+    virtual void ProcessSong(Song song);
 };
