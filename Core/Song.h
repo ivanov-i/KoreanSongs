@@ -9,12 +9,14 @@ public:
 
     int Number() const;
     std::string Name() const;
+    int Year() const;
 
 private:
     void Parse();
     int number;
     std::string name;
-    std::string line;
+    int year;
 
+    std::string line;
     Song();
 };
